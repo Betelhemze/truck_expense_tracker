@@ -5,10 +5,17 @@ let mongoServer;
 
 beforeAll(async () => {
   process.env.JWT_SECRET = process.env.JWT_SECRET || "testsecret";
+
+  const mongoUrl = process.env.MONGO_URL || process.env.CI_MONGO_URL;
+
   try {
-    mongoServer = await MongoMemoryServer.create();
-    const uri = mongoServer.getUri();
-    await mongoose.connect(uri);
+    if (mongoUrl) {
+      await mongoose.connect(mongoUrl);
+    } else {
+      mongoServer = await MongoMemoryServer.create();
+      const uri = mongoServer.getUri();
+      await mongoose.connect(uri);
+    }
   } catch (err) {
     // log and rethrow so Jest reports the cause
     // eslint-disable-next-line no-console
