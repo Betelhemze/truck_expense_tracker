@@ -6,6 +6,7 @@ const driverRoutes = require("./routes/driver.routes");
 const truckRoutes = require("./routes/truck.routes");
 const tripRoutes = require("./routes/trip.routes");
 const expenseRoutes = require("./routes/expense.routes");
+const dashboardRoutes = require("./routes/dashboard.routes");
 const app = express();
 
 app.use(cors());
@@ -26,7 +27,7 @@ app.use("/api/drivers", driverRoutes);
 app.use("/api/trucks", truckRoutes);
 app.use("/api/trips", tripRoutes);
 app.use("/api/expenses", expenseRoutes);
-
+app.use("/api/dashboard", dashboardRoutes);
 
 
 module.exports = app;
