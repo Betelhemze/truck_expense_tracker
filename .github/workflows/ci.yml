@@ -15,11 +15,6 @@ jobs:
         image: mongo:6.0
         ports:
           - 27017:27017
-        options: >-
-          --health-cmd "mongo --eval 'db.adminCommand({ ping: 1 })'"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     env:
       MONGO_URL: mongodb://127.0.0.1:27017/truck_expense_tracker_test
     steps:
@@ -35,6 +30,20 @@ jobs:
         run: |
           cd server
           npm ci --silent || npm install --no-audit --no-progress
+
+      - name: Wait for MongoDB to become available
+        run: |
+          cd server
+          for i in {1..30}; do
+            if nc -z 127.0.0.1 27017; then
+              echo "MongoDB port is open"
+              exit 0
+            fi
+            echo "Waiting for MongoDB... ($i)"
+            sleep 2
+          done
+          echo "MongoDB did not become available" >&2
+          exit 1
 
       - name: Verify MongoDB connectivity
         run: |
