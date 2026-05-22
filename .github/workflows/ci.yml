@@ -16,7 +16,7 @@ jobs:
         ports:
           - 27017:27017
         options: >-
-          --health-cmd "mongosh --eval 'db.adminCommand({ ping: 1 })'"
+          --health-cmd "mongo --eval 'db.adminCommand({ ping: 1 })'"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
@@ -35,6 +35,11 @@ jobs:
         run: |
           cd server
           npm ci --silent || npm install --no-audit --no-progress
+
+      - name: Verify MongoDB connectivity
+        run: |
+          cd server
+          node -e "const mongoose = require('mongoose'); mongoose.connect(process.env.MONGO_URL).then(() => mongoose.disconnect().then(() => console.log('MongoDB connection OK'))).catch(err => { console.error(err); process.exit(1); });"
 
       - name: Run server tests
         run: |
