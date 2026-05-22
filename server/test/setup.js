@@ -1,6 +1,18 @@
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 
+// Ensure `crypto` global exists for environments where it's not set (CI/node variants)
+if (typeof globalThis.crypto === "undefined") {
+  try {
+    // Node's crypto provides required functions; assign to globalThis for libraries expecting web crypto
+    // Fallback to the crypto module itself which exposes randomUUID and randomBytes
+    // eslint-disable-next-line global-require
+    globalThis.crypto = require("crypto");
+  } catch (e) {
+    // ignore — tests will fail later if crypto truly unavailable
+  }
+}
+
 let mongoServer;
 
 beforeAll(async () => {
