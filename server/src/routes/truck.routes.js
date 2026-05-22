@@ -2,6 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
+const asyncHandler = require("../utils/asyncHandler");
 const {
   getTrucks,
   getTruckById,
@@ -9,21 +10,47 @@ const {
   updateTruck,
   deleteTruck,
 } = require("../controller/truck.controller");
-
 const { protect } = require("../middleware/auth.middleware");
-
 const { authorizeRoles } = require("../middleware/role.middleware");
+const { validate } = require("../middleware/validation.middleware");
+const {
+  createTruckValidation,
+  updateTruckValidation,
+} = require("../validators/truck.validator");
 
 // ADMIN ONLY
+router.get("/", protect, authorizeRoles("admin"), asyncHandler(getTrucks));
 
-router.get("/", protect, authorizeRoles("admin"), getTrucks);
+router.get(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  asyncHandler(getTruckById),
+);
 
-router.get("/:id", protect, authorizeRoles("admin"), getTruckById);
+router.post(
+  "/",
+  protect,
+  authorizeRoles("admin"),
+  createTruckValidation,
+  validate,
+  asyncHandler(createTruck),
+);
 
-router.post("/", protect, authorizeRoles("admin"), createTruck);
+router.put(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  updateTruckValidation,
+  validate,
+  asyncHandler(updateTruck),
+);
 
-router.put("/:id", protect, authorizeRoles("admin"), updateTruck);
-
-router.delete("/:id", protect, authorizeRoles("admin"), deleteTruck);
+router.delete(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  asyncHandler(deleteTruck),
+);
 
 module.exports = router;

@@ -1,152 +1,58 @@
-const User = require("../models/User");
+const driverService = require("../services/driver.service");
 
-//get all drivers
-exports.getDrivers = async (req,res) => {
-    try{
+exports.getDrivers = async (req, res) => {
+  const { drivers, total, page, limit } = await driverService.getDrivers(
+    req.query,
+  );
 
-        const drivers = await User.find({
-            role: "driver",
-        }).select("-password");
-
-        res.status(200).json(drivers);
-
-    } catch (error)
-{
-    res.status(500).json({
-        message: error.message,
-    });
-}
+  res.status(200).json({
+    success: true,
+    data: drivers,
+    meta: { total, page, limit },
+  });
 };
 
-//get single driver
 exports.getDriverById = async (req, res) => {
-    try{
-        const driver = await User.findOne({
-            _id: req.params.id,
-            role: "driver",
-        }).select("-password");
+  const driver = await driverService.getDriverById(req.params.id);
 
-        if (!driver){
-            return res.status(404).json({
-                message: "Driver not found"
-            });
-        }
-        res.status(200).json(driver);
-        } catch (error){
-            res.status(500).json({
-                message: error.message,
-            });
-        }
+  res.status(200).json({
+    success: true,
+    data: driver,
+  });
 };
 
-//create driver
-exports.createDriver = async (req,res) => {
-    try {
-        const {
-            fullName,
-            email,
-            password,
-            phone,
-            licenseNumber,
-        } = req.body;
+exports.createDriver = async (req, res) => {
+  const driver = await driverService.createDriver(req.body);
 
-        //check if driver exist
-        const existingUser = await User.findOne({
-            email,
-        });
-
-        if (existingUser){
-            return res.status(400).json({
-                message: "Driver already exists",
-            });
-        }
-        const bcrypt = require("bcryptjs");
-
-        //hash password 
-        const hashedPassword = await bcrypt.hash(
-            password,
-            10
-        );
-
-        //create driver
-        const driver = await User.create({
-            fullName,
-            email,
-            password: hashedPassword,
-            role: "driver",
-            phone,
-            licenseNumber,
-        });
-        res.status(201).json({
-            message: "Driver created successfully",
-            driver: {
-            _id: driver._id,
-            fullName: driver.fullName,
-            email: driver.email,
-            role: driver.role,
-  },
-        });
-    } catch (error)
-{
-    res.status(500).json({
-        message: error.message,
-    });
-}
+  res.status(201).json({
+    success: true,
+    message: "Driver created successfully",
+    data: {
+      _id: driver._id,
+      fullName: driver.fullName,
+      email: driver.email,
+      role: driver.role,
+      phone: driver.phone,
+      licenseNumber: driver.licenseNumber,
+    },
+  });
 };
 
-//update driver
-exports.updateDriver = async (req,res) => {
-    try{
-        const updateDriver = await User.findOneAndUpdate({
-            _id: req.params.id,
-            role: "driver",
-        },
-        req.body,
-        {
-            new: true,
-        }
-        ).select("-password");
+exports.updateDriver = async (req, res) => {
+  const driver = await driverService.updateDriver(req.params.id, req.body);
 
-        if (!updateDriver){
-            return res.status(404).json({
-                message: "Driver not found",
-            });
-        }
-
-        res.status(200).json({
-            message: "Driver updated successfully",
-            updateDriver,
-        });
-    } catch (error)
-{
-    res.status(500).json({
-        message: error.message,
-    });
-}    
+  res.status(200).json({
+    success: true,
+    message: "Driver updated successfully",
+    data: driver,
+  });
 };
 
-//delete driver
-exports.deleteDriver = async (req,res) =>{
-    try{
-        const deletedDriver = await User.findOneAndDelete({
-            _id: req.params.id,
-            role: "driver",
-        });
+exports.deleteDriver = async (req, res) => {
+  await driverService.deleteDriver(req.params.id);
 
-        if (!deletedDriver){
-            return res.status(404).json({
-                message: "driver not found",
-            });
-        }
-        res.status(200).json({
-            message: "Driver deleted successfully",
-        });
-
-    } catch (error){
-        res.status(500).json({
-            message: error.message,
-        });
-    }
+  res.status(200).json({
+    success: true,
+    message: "Driver deleted successfully",
+  });
 };
-
-

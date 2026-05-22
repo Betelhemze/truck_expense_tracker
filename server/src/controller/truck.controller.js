@@ -1,101 +1,51 @@
-const Truck = require("../models/Truck");
+const truckService = require("../services/truck.service");
 
-// GET ALL TRUCKS
 exports.getTrucks = async (req, res) => {
-  try {
-    const trucks = await Truck.find().populate("driverId", "fullName email");
+  const { trucks, total, page, limit } = await truckService.getTrucks(
+    req.query,
+  );
 
-    res.status(200).json(trucks);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+  res.status(200).json({
+    success: true,
+    data: trucks,
+    meta: { total, page, limit },
+  });
 };
 
-// GET SINGLE TRUCK
 exports.getTruckById = async (req, res) => {
-  try {
-    const truck = await Truck.findById(req.params.id).populate(
-      "driverId",
-      "fullName email",
-    );
+  const truck = await truckService.getTruckById(req.params.id);
 
-    if (!truck) {
-      return res.status(404).json({
-        message: "Truck not found",
-      });
-    }
-
-    res.status(200).json(truck);
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+  res.status(200).json({
+    success: true,
+    data: truck,
+  });
 };
 
-// CREATE TRUCK
 exports.createTruck = async (req, res) => {
-  try {
-    const truck = await Truck.create(req.body);
+  const truck = await truckService.createTruck(req.body);
 
-    res.status(201).json({
-      message: "Truck created successfully",
-      truck,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+  res.status(201).json({
+    success: true,
+    message: "Truck created successfully",
+    data: truck,
+  });
 };
 
-// UPDATE TRUCK
 exports.updateTruck = async (req, res) => {
-  try {
-    const updatedTruck = await Truck.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-      },
-    );
+  const truck = await truckService.updateTruck(req.params.id, req.body);
 
-    if (!updatedTruck) {
-      return res.status(404).json({
-        message: "Truck not found",
-      });
-    }
-
-    res.status(200).json({
-      message: "Truck updated successfully",
-      updatedTruck,
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+  res.status(200).json({
+    success: true,
+    message: "Truck updated successfully",
+    data: truck,
+  });
 };
 
-// DELETE TRUCK
 exports.deleteTruck = async (req, res) => {
-  try {
-    const deletedTruck = await Truck.findByIdAndDelete(req.params.id);
+  await truckService.deleteTruck(req.params.id);
 
-    if (!deletedTruck) {
-      return res.status(404).json({
-        message: "Truck not found",
-      });
-    }
-
-    res.status(200).json({
-      message: "Truck deleted successfully",
-    });
-  } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
-  }
+  res.status(200).json({
+    success: true,
+    message: "Truck deleted successfully",
+  });
 };

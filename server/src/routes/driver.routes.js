@@ -2,26 +2,55 @@ const express = require("express");
 
 const router = express.Router();
 
-const{
-    getDrivers,
-    getDriverById,
-    createDriver,
-    updateDriver,
-    deleteDriver,
+const asyncHandler = require("../utils/asyncHandler");
+const {
+  getDrivers,
+  getDriverById,
+  createDriver,
+  updateDriver,
+  deleteDriver,
 } = require("../controller/driver.controller");
+const { protect } = require("../middleware/auth.middleware");
+const { authorizeRoles } = require("../middleware/role.middleware");
+const { validate } = require("../middleware/validation.middleware");
+const {
+  createDriverValidation,
+  updateDriverValidation,
+} = require("../validators/driver.validator");
 
-const {protect} = require("../middleware/auth.middleware");
-const {authorizeRoles} = require("../middleware/role.middleware");
+// private routes for admin only
+router.get("/", protect, authorizeRoles("admin"), asyncHandler(getDrivers));
 
-//private routes for admin only
-router.get("/",protect,authorizeRoles("admin"),getDrivers);
+router.get(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  asyncHandler(getDriverById),
+);
 
-router.get("/:id",protect,authorizeRoles("admin"),getDriverById);
+router.post(
+  "/",
+  protect,
+  authorizeRoles("admin"),
+  createDriverValidation,
+  validate,
+  asyncHandler(createDriver),
+);
 
-router.post("/",protect,authorizeRoles("admin"),createDriver);
+router.put(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  updateDriverValidation,
+  validate,
+  asyncHandler(updateDriver),
+);
 
-router.put("/:id",protect,authorizeRoles("admin"),updateDriver);
-
-router.delete("/:id",protect,authorizeRoles("admin"),deleteDriver);
+router.delete(
+  "/:id",
+  protect,
+  authorizeRoles("admin"),
+  asyncHandler(deleteDriver),
+);
 
 module.exports = router;

@@ -2,21 +2,20 @@ const express = require("express");
 
 const router = express.Router();
 
+const asyncHandler = require("../utils/asyncHandler");
+const { register, login, getMe } = require("../controller/auth.controller");
+const { protect } = require("../middleware/auth.middleware");
+const { validate } = require("../middleware/validation.middleware");
 const {
-  register,
-  login,
-  getMe,
-} = require("../controller/auth.controller");
+  registerValidation,
+  loginValidation,
+} = require("../validators/auth.validator");
 
-const {protect} = require ("../middleware/auth.middleware");
+// public routes
+router.post("/register", registerValidation, validate, asyncHandler(register));
+router.post("/login", loginValidation, validate, asyncHandler(login));
 
-//public routes
-router.post("/register", register);
-router.post("/login", login);
-
-//private routes 
-router.get("/me",protect, getMe);
-
-
+// private routes
+router.get("/me", protect, asyncHandler(getMe));
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require("express");
 
 const router = express.Router();
 
+const asyncHandler = require("../utils/asyncHandler");
 const {
   getDashboardSummary,
   getExpenseBreakdown,
@@ -10,26 +11,35 @@ const {
 } = require("../controller/dashboard.controller");
 
 const { protect } = require("../middleware/auth.middleware");
-
 const { authorizeRoles } = require("../middleware/role.middleware");
 
 // ADMIN ONLY
-router.get("/summary", protect, authorizeRoles("admin"), getDashboardSummary);
+router.get(
+  "/summary",
+  protect,
+  authorizeRoles("admin"),
+  asyncHandler(getDashboardSummary),
+);
 
 router.get(
   "/expense-breakdown",
   protect,
   authorizeRoles("admin"),
-  getExpenseBreakdown,
+  asyncHandler(getExpenseBreakdown),
 );
 
 router.get(
   "/trip-profit/:tripId",
   protect,
   authorizeRoles("admin"),
-  getTripProfit,
+  asyncHandler(getTripProfit),
 );
 
-router.get("/recent-trips", protect, authorizeRoles("admin"), getRecentTrips);
+router.get(
+  "/recent-trips",
+  protect,
+  authorizeRoles("admin"),
+  asyncHandler(getRecentTrips),
+);
 
 module.exports = router;
