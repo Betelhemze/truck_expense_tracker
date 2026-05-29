@@ -26,6 +26,9 @@ const userSchema = new mongoose.Schema(
     licenseNumber:{
         type: String,
     },
+    documentUrl: {
+        type: String,
+    },
 
   },
   {

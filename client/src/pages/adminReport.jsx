@@ -13,6 +13,22 @@ export default function ReportAnalyticsPage() {
     setReport(res.data.data);
   };
 
+  const handleExport = async () => {
+    try {
+      const response = await api.reports.exportToExcel();
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "report.xlsx");
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    } catch (err) {
+      console.error("Export failed", err);
+      alert("Failed to export report");
+    }
+  };
+
   if (!report) return <p>Loading report...</p>;
 
   return (
@@ -22,7 +38,7 @@ export default function ReportAnalyticsPage() {
           <h2>Report & Analytics</h2>
           <p>Detailed business insight & report</p>
         </div>
-        <button className="export-btn">Export to Excel</button>
+        <button className="export-btn" onClick={handleExport}>Export to Excel</button>
       </header>
 
       {/* Summary */}

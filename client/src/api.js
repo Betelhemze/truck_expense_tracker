@@ -75,4 +75,16 @@ instance.dashboard = {
   recentTrips: () => instance.get("/dashboard/recent-trips"),
 };
 
+instance.reports = {
+  exportToExcel: () => instance.get("/reports/export", { responseType: "blob" }),
+};
+
+instance.upload = {
+  file: (formData) => instance.post("/upload", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  }),
+};
+
 export const api = instance;

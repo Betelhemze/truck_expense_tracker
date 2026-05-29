@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import { useLanguage } from "../LanguageContext";
+import { getTranslation } from "../i18n";
 import { api } from "../api";
 
 const initialForm = {
@@ -13,6 +15,8 @@ const initialForm = {
 };
 
 export default function TripsPage() {
+   const { language } = useLanguage();
+   const t = (key) => getTranslation(key, language);
   const [trips, setTrips] = useState([]);
   const [trucks, setTrucks] = useState([]);
   const [drivers, setDrivers] = useState([]);
@@ -25,7 +29,7 @@ export default function TripsPage() {
       const res = await api.trips.list({ page: 1, limit: 50 });
       setTrips(res.data.data);
     } catch (err) {
-      setError("Unable to load trips");
+      setError(t("unableToLoad"));
     }
   };
 
@@ -34,7 +38,7 @@ export default function TripsPage() {
       const res = await api.trucks.list({ page: 1, limit: 50 });
       setTrucks(res.data.data);
     } catch (err) {
-      setError("Unable to load trucks");
+      setError(t("unableToLoad"));
     }
   };
 
@@ -43,7 +47,7 @@ export default function TripsPage() {
       const res = await api.drivers.list({ page: 1, limit: 50 });
       setDrivers(res.data.data);
     } catch (err) {
-      setError("Unable to load drivers");
+      setError(t("unabletouplaod"));
     }
   };
 
@@ -126,8 +130,8 @@ export default function TripsPage() {
       <Sidebar />
       <main className="content">
         <header className="page-header">
-          <h1>Trips</h1>
-          <p>Create and review trip assignments for your fleet.</p>
+          <h1>{t("trips")}</h1>
+          <p>{t("tripsmessage")}</p>
         </header>
 
         {error && <div className="alert">{error}</div>}
@@ -136,14 +140,14 @@ export default function TripsPage() {
           <h2>{editingId ? "Edit trip" : "New trip"}</h2>
           <form className="form-grid" onSubmit={handleSubmit}>
             <label>
-              Truck
+              {t("truck")}
               <select
                 name="truckId"
                 value={form.truckId}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select truck</option>
+                <option value="">{t("selectTruck")}</option>
                 {trucks.map((truck) => (
                   <option key={truck._id} value={truck._id}>
                     {truck.number} • {truck.model}
@@ -152,14 +156,14 @@ export default function TripsPage() {
               </select>
             </label>
             <label>
-              Driver
+              {t("driver")}
               <select
                 name="driverId"
                 value={form.driverId}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select driver</option>
+                <option value="">{t("selectDriver")}</option>
                 {drivers.map((driver) => (
                   <option key={driver._id} value={driver._id}>
                     {driver.fullName}
@@ -168,7 +172,7 @@ export default function TripsPage() {
               </select>
             </label>
             <label>
-              Source
+              {t("source")}
               <input
                 name="source"
                 value={form.source}
@@ -177,7 +181,7 @@ export default function TripsPage() {
               />
             </label>
             <label>
-              Destination
+              {t("destination")}
               <input
                 name="destination"
                 value={form.destination}
@@ -186,7 +190,7 @@ export default function TripsPage() {
               />
             </label>
             <label>
-              Load type
+              {t("loadType")}
               <input
                 name="loadType"
                 value={form.loadType}
@@ -195,7 +199,7 @@ export default function TripsPage() {
               />
             </label>
             <label>
-              Income
+              {t("income")}
               <input
                 name="income"
                 value={form.income}
@@ -205,7 +209,7 @@ export default function TripsPage() {
               />
             </label>
             <label>
-              Departure date
+              {t("departureDate")}
               <input
                 name="departureDate"
                 value={form.departureDate}
@@ -216,11 +220,11 @@ export default function TripsPage() {
             </label>
             <div style={{ display: "flex", gap: "1rem" }}>
               <button className="button primary" type="submit">
-                {editingId ? "Update trip" : "Create trip"}
+                {editingId ? t("updateTrip") : t("createTrip")}
               </button>
               {editingId && (
                 <button className="button secondary" type="button" onClick={handleCancelEdit}>
-                  Cancel
+                  {t("cancel")}
                 </button>
               )}
             </div>
@@ -228,17 +232,17 @@ export default function TripsPage() {
         </section>
 
         <section className="panel">
-          <h2>Trip list</h2>
+          <h2>{t("triplist")}</h2>
           <div className="table-scroll">
             <table>
               <thead>
                 <tr>
-                  <th>Truck</th>
-                  <th>Driver</th>
-                  <th>Route</th>
-                  <th>Income</th>
-                  <th>Status</th>
-                  <th>Actions</th>
+                  <th>{t("truck")}</th>
+                  <th>{t("driver")}</th>
+                  <th>{t("route")}</th>
+                  <th>{t("income")}</th>
+                  <th>{t("status")}</th>
+                  <th>{t("actions")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -258,7 +262,7 @@ export default function TripsPage() {
                           onClick={() => handleComplete(trip._id)}
                           style={{ padding: "0.4rem 0.8rem", fontSize: "0.85rem", marginRight: "0.5rem", borderColor: "#2ea44f", color: "#2ea44f" }}
                         >
-                          Complete
+                          {t("complete")}
                         </button>
                       )}
                       <button
@@ -266,21 +270,21 @@ export default function TripsPage() {
                         onClick={() => handleEditClick(trip)}
                         style={{ padding: "0.4rem 0.8rem", fontSize: "0.85rem", marginRight: "0.5rem" }}
                       >
-                        Edit
+                        {t("edit")}
                       </button>
                       <button
                         className="button secondary"
                         onClick={() => handleDelete(trip._id)}
                         style={{ padding: "0.4rem 0.8rem", fontSize: "0.85rem", borderColor: "#ff7b72", color: "#ff7b72" }}
                       >
-                        Delete
+                        {t("delete")}
                       </button>
                     </td>
                   </tr>
                 ))}
                 {trips.length === 0 && (
                   <tr>
-                    <td colSpan="6" style={{ textAlign: "center", color: "#8b949e" }}>No trips found.</td>
+                    <td colSpan="6" style={{ textAlign: "center", color: "#8b949e" }}>{t("noTripsmessage")}</td>
                   </tr>
                 )}
               </tbody>

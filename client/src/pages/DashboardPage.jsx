@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import { api } from "../api";
 import { Bar, Line, Pie } from "react-chartjs-2";
+import { useLanguage } from "../LanguageContext";
+import { getTranslation } from "../i18n";
 import { useAuth } from "../AuthContext";
 import "../styles/adminDashboard.css";
 import "chart.js/auto";
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(key, language);
   const [metrics, setMetrics] = useState(null);
   const [expenseForm, setExpenseForm] = useState({
     type: "",
@@ -140,8 +144,8 @@ export default function DashboardPage() {
         <Sidebar />
         <main className="content">
           <header className="page-header">
-            <h1>Admin Dashboard</h1>
-            <p>Overview of your truck business</p>
+            <h1>{t("adminDashboard")}</h1>
+            <p>{t("adminDashboardSubtitle")}</p>
           </header>
 
           {/* Summary Cards */}
@@ -229,8 +233,8 @@ export default function DashboardPage() {
       <Sidebar />
       <main className="content">
         <header className="page-header">
-          <h1>Driver Dashboard!!</h1>
-          <p>Manage your assigned trips and expenses</p>
+          <h1>{t("driverDashboard")}</h1>
+          <p>{t("driverDashboardSubtitle")}</p>
         </header>
 
         {/* Welcome Banner */}
@@ -242,7 +246,9 @@ export default function DashboardPage() {
             border: "1px solid rgba(56, 139, 253, 0.2)",
           }}
         >
-          <h2 style={{ margin: 0 }}>Welcome back, {user?.fullName}!</h2>
+          <h2 style={{ margin: 0 }}>
+            {t("welcome")}, {user?.fullName}!
+          </h2>
           {metrics.truck ? (
             <p style={{ margin: "0.5rem 0 0", color: "#8b949e" }}>
               Assigned Truck: <strong>{metrics.truck.number}</strong> (
@@ -250,8 +256,7 @@ export default function DashboardPage() {
             </p>
           ) : (
             <p style={{ margin: "0.5rem 0 0", color: "#ff7b72" }}>
-              You do not have an assigned truck currently. Please contact
-              administration.
+              {t("nodata")}
             </p>
           )}
         </div>
@@ -259,23 +264,23 @@ export default function DashboardPage() {
         {/* Metrics Cards */}
         <div className="cards" style={{ marginBottom: "2rem" }}>
           <div className="card">
-            <h2>Total Trips</h2>
+            <h2>{t("totalTrips")}</h2>
             <p>{metrics.totalTrips}</p>
           </div>
           <div className="card">
-            <h2>Active Trips</h2>
+            <h2>{t("activeTrips")}</h2>
             <p>{metrics.activeTrips}</p>
           </div>
           <div className="card">
-            <h2>Completed Trips</h2>
+            <h2>{t("completedTrips")}</h2>
             <p>{metrics.completedTrips}</p>
           </div>
           <div className="card">
-            <h2>Total Earnings</h2>
+            <h2>{t("totalRevenue")}</h2>
             <p>${metrics.totalIncome}</p>
           </div>
           <div className="card">
-            <h2>Net Profit</h2>
+            <h2>{t("netProfit")}</h2>
             <p>${metrics.netProfit}</p>
           </div>
         </div>
@@ -397,28 +402,27 @@ export default function DashboardPage() {
               padding: "3rem 1.5rem",
             }}
           >
-            <h3 style={{ margin: 0 }}>No Active Trip</h3>
+            <h3 style={{ margin: 0 }}>{t("noactive")}</h3>
             <p style={{ color: "#8b949e", margin: "0.5rem 0 0" }}>
-              You currently have no active trip. Contact your manager for
-              assignments.
+              {t("noactivetrip")}
             </p>
           </div>
         )}
 
         {/* Recent Trips Table */}
         <section className="panel">
-          <h2>My Recent Trips</h2>
+          <h2>{t("recentTrips")}</h2>
           <div className="table-scroll">
             <table>
               <thead>
                 <tr>
-                  <th>Route</th>
-                  <th>Load Type</th>
-                  <th>Departure Date</th>
-                  <th>Income</th>
-                  <th>Expenses</th>
-                  <th>Profit</th>
-                  <th>Status</th>
+                  <th>{t("route")}</th>
+                  <th>{t("loadType")}</th>
+                  <th>{t("departureDate")}</th>
+                  <th>{t("income")}</th>
+                  <th>{t("expenses")}</th>
+                  <th>{t("profit")}</th>
+                  <th>{t("status")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -459,7 +463,7 @@ export default function DashboardPage() {
                       colSpan="7"
                       style={{ textAlign: "center", color: "#8b949e" }}
                     >
-                      No trips recorded.
+                      {t("noTripsmessage")}
                     </td>
                   </tr>
                 )}

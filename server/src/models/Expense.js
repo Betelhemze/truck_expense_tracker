@@ -39,6 +39,9 @@ const expenseSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    receiptUrl: {
+      type: String,
+    },
   },
   {
     timestamps: true,

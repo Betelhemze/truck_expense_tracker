@@ -10,14 +10,33 @@ export default function AddDriverPage() {
     licenseNumber: "",
     truckId: "",
   });
+  const [file, setFile] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await api.drivers.create(form);
+    let documentUrl = "";
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const res = await api.upload.file(formData);
+        documentUrl = res.data.url;
+      } catch (err) {
+        console.error("Upload failed", err);
+        alert("File upload failed");
+        return;
+      }
+    }
+
+    await api.drivers.create({ ...form, documentUrl });
     navigate("/drivers"); // redirect back to drivers list
   };
 
@@ -71,6 +90,15 @@ export default function AddDriverPage() {
             placeholder="Truck ID or Driver Name"
             value={form.truckId}
             onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          License Document
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*,.pdf"
           />
         </label>
 

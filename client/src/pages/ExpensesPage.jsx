@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import { useLanguage } from "../LanguageContext";
+import { getTranslation } from "../i18n";
 import { api } from "../api";
 
 const initialForm = {
@@ -12,6 +14,8 @@ const initialForm = {
 };
 
 export default function ExpensesPage() {
+  const { language } = useLanguage();
+  const t = (key) => getTranslation(key, language);
   const [expenses, setExpenses] = useState([]);
   const [trips, setTrips] = useState([]);
   const [form, setForm] = useState(initialForm);
@@ -66,40 +70,41 @@ export default function ExpensesPage() {
       <Sidebar />
       <main className="content">
         <header className="page-header">
-          <h1>Expenses</h1>
-          <p>Record trip expenses and keep payments organized.</p>
+          <h1>{t("expensesPage")}</h1>
+          <p>{t("expensesubtitle")}</p>
         </header>
 
         {error && <div className="alert">{error}</div>}
 
         <section className="panel">
-          <h2>Add expense</h2>
+          <h2>{t("addExpense")}</h2>
           <form className="form-grid" onSubmit={handleSubmit}>
             <label>
-              Trip
+              {t("trips")}
               <select
                 name="tripId"
                 value={form.tripId}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select trip</option>
+                <option value="">{t("selectTrip")}</option>
                 {trips.map((trip) => (
                   <option key={trip._id} value={trip._id}>
-                    {trip.source} → {trip.destination}{trip.truckId?.number ? ` (${trip.truckId.number})` : ""}
+                    {trip.source} → {trip.destination}
+                    {trip.truckId?.number ? ` (${trip.truckId.number})` : ""}
                   </option>
                 ))}
               </select>
             </label>
             <label>
-              Type
+              {t("expenseType")}
               <select
                 name="type"
                 value={form.type}
                 onChange={handleChange}
                 required
               >
-                <option value="">Select type</option>
+                <option value="">{t("selectExpenseType")}</option>
                 <option value="fuel">Fuel</option>
                 <option value="maintenance">Maintenance</option>
                 <option value="food">Food</option>
@@ -109,7 +114,7 @@ export default function ExpensesPage() {
               </select>
             </label>
             <label>
-              Amount
+              {t("expenseAmount")}
               <input
                 name="amount"
                 value={form.amount}
@@ -119,7 +124,8 @@ export default function ExpensesPage() {
               />
             </label>
             <label>
-              Date
+              {t("expenseDate")}
+
               <input
                 name="date"
                 value={form.date}
@@ -129,14 +135,15 @@ export default function ExpensesPage() {
               />
             </label>
             <label>
-              Paid by
+              {t("paidby")}
               <select name="paidBy" value={form.paidBy} onChange={handleChange}>
-                <option value="admin">Admin</option>
-                <option value="driver">Driver</option>
+                <option value="admin">{t("admin")}</option>
+                <option value="driver">{t("drivers")}</option>
               </select>
             </label>
             <label className="full-width">
-              Description
+              {t("expenseDescription")}
+
               <textarea
                 name="description"
                 value={form.description}
@@ -145,23 +152,23 @@ export default function ExpensesPage() {
               />
             </label>
             <button className="button primary" type="submit">
-              Save expense
+              {t("saveExpense")}
             </button>
           </form>
         </section>
 
         <section className="panel">
-          <h2>Expense list</h2>
+          <h2>{t("expenseList")}</h2>
           <div className="table-scroll">
             <table>
               <thead>
                 <tr>
-                  <th>Trip</th>
-                  <th>Type</th>
-                  <th>Amount</th>
-                  <th>Date</th>
-                  <th>Paid by</th>
-                  <th>Description</th>
+                  <th>{t("trips")}</th>
+                  <th>{t("expenseType")}</th>
+                  <th>{t("expenseAmount")}</th>
+                  <th>{t("expenseDate")}</th>
+                  <th>{t("paidby")}</th>
+                  <th>{t("expenseDescription")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -170,16 +177,27 @@ export default function ExpensesPage() {
                     <td>
                       {expense.tripId?.source} → {expense.tripId?.destination}
                     </td>
-                    <td style={{ textTransform: "capitalize" }}>{expense.type.replace("_", " ")}</td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      {expense.type.replace("_", " ")}
+                    </td>
                     <td>${expense.amount}</td>
                     <td>{new Date(expense.date).toLocaleDateString()}</td>
-                    <td style={{ textTransform: "capitalize" }}>{expense.paidBy}</td>
-                    <td style={{ color: "#8b949e" }}>{expense.description || "-"}</td>
+                    <td style={{ textTransform: "capitalize" }}>
+                      {expense.paidBy}
+                    </td>
+                    <td style={{ color: "#8b949e" }}>
+                      {expense.description || "-"}
+                    </td>
                   </tr>
                 ))}
                 {expenses.length === 0 && (
                   <tr>
-                    <td colSpan="6" style={{ textAlign: "center", color: "#8b949e" }}>No expenses found.</td>
+                    <td
+                      colSpan="6"
+                      style={{ textAlign: "center", color: "#8b949e" }}
+                    >
+                      {t("noexpenseFound")}
+                    </td>
                   </tr>
                 )}
               </tbody>

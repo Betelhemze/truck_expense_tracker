@@ -13,6 +13,7 @@ export default function DriverExpensePage() {
     description: "",
     date: "",
   });
+  const [file, setFile] = useState(null);
 
   useEffect(() => {
     loadTrip();
@@ -27,10 +28,29 @@ export default function DriverExpensePage() {
     setNewExpense({ ...newExpense, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   const handleAddExpense = async (e) => {
     e.preventDefault();
-    await api.expenses.create({ ...newExpense, tripId: id });
+    let receiptUrl = "";
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      try {
+        const res = await api.upload.file(formData);
+        receiptUrl = res.data.url;
+      } catch (err) {
+        console.error("Upload failed", err);
+        alert("File upload failed");
+        return;
+      }
+    }
+
+    await api.expenses.create({ ...newExpense, receiptUrl, tripId: id });
     setNewExpense({ type: "", amount: "", description: "", date: "" });
+    setFile(null);
     loadTrip();
   };
 
@@ -92,6 +112,11 @@ export default function DriverExpensePage() {
             onChange={handleChange}
             required
           />
+          <input
+            type="file"
+            onChange={handleFileChange}
+            accept="image/*,.pdf"
+          />
           <button type="submit" className="add-btn">
             Add Expense
           </button>
@@ -106,6 +131,11 @@ export default function DriverExpensePage() {
             <li key={idx}>
               <strong>{exp.type}</strong> — {exp.description}, {exp.date},
               <span className="expense-amount">${exp.amount}</span>
+              {exp.receiptUrl && (
+                <a href={`http://localhost:5000${exp.receiptUrl}`} target="_blank" rel="noreferrer" style={{marginLeft: '10px'}}>
+                  View Receipt
+                </a>
+              )}
             </li>
           ))}
         </ul>
