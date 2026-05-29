@@ -1,4 +1,5 @@
 # 🚚 Truck Expense Tracker
+<<<<<<< HEAD
 
 A full-stack web application for managing truck expenses, trips, and drivers with multi-language support and dark/light theme.
 
@@ -8,27 +9,42 @@ A full-stack web application for managing truck expenses, trips, and drivers wit
 
 ### 🌙 Dark/Light Theme Support
 
+=======
+A full-stack web application for managing truck expenses, trips, and drivers with multi-language support and dark/light theme.
+---
+## ✨ Features
+### 🌙 Dark/Light Theme Support
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - Toggle between light and dark modes
 - Persistent theme selection (localStorage)
 - Smooth transitions and theme animations
 - Applied to all pages and components
 - CSS variables for easy customization
+<<<<<<< HEAD
 
 ### 🌍 Multi-Language Support
 
+=======
+### 🌍 Multi-Language Support
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - **English (EN)** - Default language
 - **Amharic (አማርኛ)** - Full Amharic translation
 - 80+ translated UI labels and messages
 - Language selector on login page and settings panel
 - Persistent language selection
 - Real-time UI translation
+<<<<<<< HEAD
 
 ### ⚙️ Settings Panel
 
+=======
+### ⚙️ Settings Panel
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - Integrated in sidebar (desktop view)
 - Theme switcher with visual feedback
 - Language selector dropdown
 - Quick access to all settings
+<<<<<<< HEAD
 
 ---
 
@@ -36,6 +52,11 @@ A full-stack web application for managing truck expenses, trips, and drivers wit
 
 ### What's Ready
 
+=======
+---
+## 🎯 PROJECT STATUS: 95% COMPLETE ✅
+### What's Ready
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - ✅ Complete authentication system
 - ✅ 17 routed pages and components
 - ✅ Full CRUD operations for Drivers, Trucks, Trips, Expenses
@@ -47,6 +68,7 @@ A full-stack web application for managing truck expenses, trips, and drivers wit
 - ✅ Multi-language internationalization
 - ✅ Role-based access control
 - ✅ Professional UI/UX
+<<<<<<< HEAD
 
 ---
 
@@ -60,22 +82,38 @@ A full-stack web application for managing truck expenses, trips, and drivers wit
 
 ### Installation
 
+=======
+---
+## 📋 QUICK START
+### Prerequisites
+- Node.js (v14+)
+- MongoDB
+- npm or yarn
+### Installation
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 ```bash
 # Clone the repository
 git clone <repo-url>
 cd truck_expense_tracker
+<<<<<<< HEAD
 
+=======
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 # Backend Setup
 cd server
 npm install
 # Create .env file with MongoDB URI and JWT secret
 npm start
+<<<<<<< HEAD
 
+=======
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 # Frontend Setup (in another terminal)
 cd client
 npm install
 npm run dev
 ```
+<<<<<<< HEAD
 
 ### Access the Application
 
@@ -87,6 +125,14 @@ npm run dev
 
 ## 🏗️ PROJECT STRUCTURE
 
+=======
+### Access the Application
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:5000/api
+- API Docs: http://localhost:5000/api/docs
+---
+## 🏗️ PROJECT STRUCTURE
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 ```
 truck_expense_tracker/
 ├── server/                 # Express.js backend
@@ -121,6 +167,7 @@ truck_expense_tracker/
 ├── DEMO_GUIDE.md          # Complete demo walkthrough
 └── README.md              # This file
 ```
+<<<<<<< HEAD
 
 ---
 
@@ -128,6 +175,11 @@ truck_expense_tracker/
 
 ### For Administrators
 
+=======
+---
+## 🚀 KEY FEATURES
+### For Administrators
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - 📊 Comprehensive dashboard with analytics
 - 👥 Driver management (add, edit, delete)
 - 🚛 Truck fleet management
@@ -137,9 +189,13 @@ truck_expense_tracker/
 - 🎯 Payment tracking per trip
 - 🌍 Support for multiple languages
 - 🌙 Dark/Light theme support
+<<<<<<< HEAD
 
 ### For Drivers
 
+=======
+### For Drivers
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - 📱 Personal dashboard with metrics
 - 🛣️ View assigned trips
 - 💸 Log trip expenses
@@ -147,17 +203,23 @@ truck_expense_tracker/
 - 📊 View personal profit/loss
 - 🌍 Access to multiple languages
 - 🌙 Preferred theme selection
+<<<<<<< HEAD
 
 ---
 
 ## 🔐 Authentication & Security
 
+=======
+---
+## 🔐 Authentication & Security
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - JWT-based authentication
 - Password hashing with bcrypt
 - Role-based access control (Admin/Driver)
 - Protected routes
 - Secure session management
 - Token persistence in localStorage
+<<<<<<< HEAD
 
 ---
 
@@ -165,23 +227,39 @@ truck_expense_tracker/
 
 ### Frontend
 
+=======
+---
+## 📊 TECHNOLOGY STACK
+### Frontend
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - React 18+
 - React Router DOM
 - Axios (HTTP client)
 - Chart.js (Charts)
 - CSS3 with CSS Variables
 - Context API (State management)
+<<<<<<< HEAD
 
 ### Backend
 
+=======
+### Backend
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
 - Express.js
 - MongoDB with Mongoose
 - JWT authentication
 - Bcrypt (Password hashing)
 - Express validation middleware
 - Swagger API documentation
+<<<<<<< HEAD
 
 ### Database
 
 - MongoDB
 - Collections: Users, Trips, Expenses, Trucks
+=======
+### Database
+- MongoDB
+- Collections: Users, Trips, Expenses, Trucks
+# truck_expense_tracker
+>>>>>>> d564d586c01056bdadbc2786a6ff1e1265fe5ed6
