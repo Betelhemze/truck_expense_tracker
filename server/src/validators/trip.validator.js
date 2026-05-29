@@ -15,6 +15,10 @@ exports.createTripValidation = [
     .optional()
     .isIn(["active", "completed", "finished"])
     .withMessage("Status must be active, completed, or finished"),
+  body("paymentReceived")
+    .optional()
+    .isNumeric()
+    .withMessage("paymentReceived must be a number"),
 ];
 
 exports.updateTripValidation = [
@@ -45,4 +49,8 @@ exports.updateTripValidation = [
     .optional()
     .isIn(["active", "completed", "finished"])
     .withMessage("Status must be active, completed, or finished"),
+  body("paymentReceived")
+    .optional()
+    .isNumeric()
+    .withMessage("paymentReceived must be a number"),
 ];

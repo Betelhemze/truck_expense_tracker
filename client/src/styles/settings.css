@@ -1,0 +1,65 @@
+.top-settings {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+
+/* THEME BUTTON */
+.theme-circle {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  background: #1f2937;
+  color: white;
+
+  transition: 0.3s;
+}
+
+.theme-circle:hover {
+  transform: scale(1.05);
+}
+
+
+/* LANGUAGE */
+.language-switch {
+  display: flex;
+  align-items: center;
+
+  background: #1f2937;
+
+  border-radius: 999px;
+
+  padding: 4px;
+}
+
+
+.lang-btn {
+  border: none;
+  background: transparent;
+
+  color: white;
+
+  padding: 6px 12px;
+
+  border-radius: 999px;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+
+.lang-btn.active {
+  background: white;
+  color: black;
+}

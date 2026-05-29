@@ -13,11 +13,18 @@ const {
 const { protect } = require("../middleware/auth.middleware");
 const { authorizeRoles } = require("../middleware/role.middleware");
 
-// ADMIN ONLY
+// ADMIN & DRIVER
+router.get(
+  "/",
+  protect,
+  authorizeRoles("admin", "driver"),
+  asyncHandler(getDashboardSummary),
+);
+
 router.get(
   "/summary",
   protect,
-  authorizeRoles("admin"),
+  authorizeRoles("admin", "driver"),
   asyncHandler(getDashboardSummary),
 );
 

@@ -1,7 +1,7 @@
 const dashboardService = require("../services/dashboard.service");
 
 exports.getDashboardSummary = async (req, res) => {
-  const summary = await dashboardService.getDashboardSummary();
+  const summary = await dashboardService.getDashboardSummary(req.user);
 
   res.status(200).json({
     success: true,

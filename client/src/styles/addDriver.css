@@ -1,0 +1,64 @@
+.add-driver-page {
+  padding: 20px;
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  max-width: 500px;
+  margin: auto;
+  border-radius: 8px;
+}
+
+.add-driver-page h2 {
+  margin-bottom: 5px;
+}
+
+.add-driver-page p {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+}
+
+.driver-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.driver-form label {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.driver-form input {
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-btn {
+  background: var(--text-secondary);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-btn {
+  background: var(--success-color);
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}

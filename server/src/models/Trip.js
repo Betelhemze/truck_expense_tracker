@@ -34,6 +34,11 @@ const tripSchema = new mongoose.Schema(
       required: true,
     },
 
+    paymentReceived: {
+      type: Number,
+      default: 0,
+    },
+
     departureDate: {
       type: Date,
       required: true,

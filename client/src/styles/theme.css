@@ -1,0 +1,149 @@
+/* Light Theme (Default) */
+:root {
+  /* Colors - Updated to neutral gray palette */
+  --primary-color: #6b7280;
+  --secondary-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --success-color: #059669;
+
+  /* Light Theme Backgrounds */
+  --bg-primary: #E5E7E7;
+  --bg-secondary: #dcdde0;
+  --bg-tertiary: #f3f4f6;
+  --bg-hover: #e5e7eb;
+
+  /* Light Theme Text - Black & Gray */
+  --text-primary: #000000;
+  --text-secondary: #666666;
+  --text-light: #999999;
+
+  /* Light Theme Borders */
+  --border-color: #d1d5db;
+  --border-light: #e5e7eb;
+
+  /* Light Theme Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Dark Theme */
+:root.dark-theme {
+  /* Colors remain neutral */
+  --primary-color: #9ca3af;
+  --secondary-color: #10b981;
+  --danger-color: #ef4444;
+  --warning-color: #f59e0b;
+  --success-color: #059669;
+
+  /* Dark Theme Backgrounds */
+  --bg-primary: #1f2937;
+  --bg-secondary: #2d3748;
+  --bg-tertiary: #3d4556;
+  --bg-hover: #4b5563;
+
+  /* Dark Theme Text - Gray & Light Gray */
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --text-light: #808080;
+
+  /* Dark Theme Borders */
+  --border-color: #4b5563;
+  --border-light: #374151;
+
+  /* Dark Theme Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Apply theme to body */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/* Common components with theme support */
+input,
+select,
+textarea {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  background-color: var(--bg-hover);
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.card,
+.section {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: var(--shadow-md);
+}
+
+table {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+table th {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+table td {
+  border-color: var(--border-light);
+}
+
+table tr:hover {
+  background-color: var(--bg-hover);
+}
+
+/* Modal/Dialog support */
+.modal,
+.dialog {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Navigation */
+nav {
+  background-color: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+nav a {
+  color: var(--text-primary);
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: var(--primary-color);
+}
